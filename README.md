@@ -1,4 +1,4 @@
-OrderExport
+Order Export
 ===========
 
 Order export is a quick and dirty extension I wrote as an implementation for a client - basically, it exports line items to a CSV file.
