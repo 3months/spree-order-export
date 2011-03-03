@@ -1,0 +1,5 @@
+en:
+    order_export: Order Export
+    order_export_description: Export of orders based on information from line items.
+    order_export_help: "Use the filters on the right to adjust the date ranges for the orders you wish to export, and then click the 'Search' button to generate the file."
+

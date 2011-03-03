@@ -1,0 +1,58 @@
+module OrderExport
+  module ReportsControllerExt
+    def self.included(base)
+      base.class_eval do
+
+
+        def order_export
+          export = !params[:search].nil?
+          params[:search] = {} unless params[:search]
+
+          if params[:search][:created_at_greater_than].blank?
+            params[:search][:created_at_greater_than] = Time.zone.now.beginning_of_month
+          else
+            params[:search][:created_at_greater_than] = Time.zone.parse(params[:search][:created_at_greater_than]).beginning_of_day rescue Time.zone.now.beginning_of_month
+          end
+
+          if params[:search] && !params[:search][:created_at_less_than].blank?
+            params[:search][:created_at_less_than] = Time.zone.parse(params[:search][:created_at_less_than]).end_of_day rescue ""
+          end
+
+          params[:search][:completed_at_not_null] ||= "1"
+          if params[:search].delete(:completed_at_not_null) == "1"
+            params[:search][:completed_at_not_null] = true
+          end
+
+          params[:search][:order] ||= "descend_by_created_at"
+
+          @search = Order.searchlogic(params[:search])
+
+          render and return unless export
+
+          @orders = @search.do_search
+
+
+          orders_export = FasterCSV.generate(:col_sep => ";", :row_sep => "\r\n") do |csv|
+            @orders.each do |order|
+              order.line_items.each do |line_item|
+                csv_line = []
+                csv_line << order.number
+                csv_line << order.bill_address.full_name
+                csv_line << (order.bill_address.address1 + order.bill_address.address2 ? order.bill_address.address2 : "" + order.bill_address.state + order.bill_address.country)
+                csv_line << order.bill_address.phone
+                csv_line << order.email
+                csv_line << line_item.variant.name
+                csv_line << line_item.quantity
+                csv_line << order.total.to_s
+                csv_line << order.payment_method.name
+                csv << csv_line
+              end
+            end
+          end
+          send_data orders_export, :type => 'text/csv', :filename => "Orders-#{Time.now.strftime('%Y%m%d')}.csv"
+        end
+      end
+    end
+  end
+end
+

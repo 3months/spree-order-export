@@ -1,0 +1,11 @@
+<h1><%= t("order_export") %> </h1>
+
+<p>
+  <%= t('order_export_help') %>
+</p>
+
+
+<% content_for :sidebar do %>
+  <%= render :partial => 'admin/shared/report_criteria', :locals => {} %>
+<% end %>
+
