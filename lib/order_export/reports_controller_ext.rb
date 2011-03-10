@@ -54,14 +54,17 @@ module OrderExport
                 csv_line << order.updated_at
                 csv_line << order.completed_at
                 csv_line << order.number
-                csv_line << order.bill_address.full_name
-                address_line = ""
-                address_line << order.bill_address.address1 + " " if order.bill_address.address1?
-                address_line << order.bill_address.address2 + " " if order.bill_address.address2?
-                address_line << order.bill_address.city + " " if order.bill_address.city?
-                address_line << order.bill_address.country.name + " " if order.bill_address.country_id?
-                csv_line << address_line
-                csv_line << order.bill_address.phone if order.bill_address.phone?
+
+                if order.bill_address
+                  csv_line << order.bill_address.full_name
+                  address_line = ""
+                  address_line << order.bill_address.address1 + " " if order.bill_address.address1?
+                  address_line << order.bill_address.address2 + " " if order.bill_address.address2?
+                  address_line << order.bill_address.city + " " if order.bill_address.city?
+                  address_line << order.bill_address.country.name + " " if order.bill_address.country_id?
+                  csv_line << address_line
+                  csv_line << order.bill_address.phone if order.bill_address.phone?
+                end
                 csv_line << order.email
                 csv_line << line_item.variant.name
                 csv_line << line_item.quantity
