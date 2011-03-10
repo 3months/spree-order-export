@@ -64,6 +64,9 @@ module OrderExport
                   address_line << order.bill_address.country.name + " " if order.bill_address.country_id?
                   csv_line << address_line
                   csv_line << order.bill_address.phone if order.bill_address.phone?
+                else
+                  csv_line << ""
+                  csv_line << ""
                 end
                 csv_line << order.email
                 csv_line << line_item.variant.name
