@@ -55,7 +55,7 @@ module OrderExport
                 csv_line << order.completed_at
                 csv_line << order.number
                 csv_line << order.bill_address.full_name
-                csv_line << (order.bill_address.address1 + order.bill_address.address2 ? order.bill_address.address2 : "" + order.bill_address.state + order.bill_address.country)
+                csv_line << order.bill_address.address1 + order.bill_address.address2 + order.bill_address.state + order.bill_address.country.name
                 csv_line << order.bill_address.phone
                 csv_line << order.email
                 csv_line << line_item.variant.name
