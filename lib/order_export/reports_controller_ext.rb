@@ -68,7 +68,7 @@ module OrderExport
                   csv_line << ""
                   csv_line << ""
                 end
-                csv_line << order.email
+                csv_line << order.email || ""
                 csv_line << line_item.variant.name
                 csv_line << line_item.quantity
                 csv_line << order.total.to_s
