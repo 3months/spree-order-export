@@ -33,9 +33,25 @@ module OrderExport
 
 
           orders_export = FasterCSV.generate(:col_sep => ";", :row_sep => "\r\n") do |csv|
+            headers = [
+              t('order_export.header.last_updated'),
+              t('order_export.header.completed_at'),
+              t('order_export.header.number'),
+              t('order_export.header.address'),
+              t('order_export.header.email'),
+              t('order_export.header.variant_name'),
+              t('order_export.header.quantity'),
+              t('order_export.header.order_total'),
+              t('order_export.header.payment_method')
+            ]
+
+            csv << headers
+
             @orders.each do |order|
               order.line_items.each do |line_item|
                 csv_line = []
+                csv_line << order.updated_at.strftime("%c")
+                csv_line << order.completed_at.strftime("%c")
                 csv_line << order.number
                 csv_line << order.bill_address.full_name
                 csv_line << (order.bill_address.address1 + order.bill_address.address2 ? order.bill_address.address2 : "" + order.bill_address.state + order.bill_address.country)
