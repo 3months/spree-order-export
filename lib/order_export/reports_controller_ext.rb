@@ -50,8 +50,8 @@ module OrderExport
             @orders.each do |order|
               order.line_items.each do |line_item|
                 csv_line = []
-                csv_line << order.updated_at.strftime("%c")
-                csv_line << order.completed_at.strftime("%c")
+                csv_line << order.updated_at
+                csv_line << order.completed_at
                 csv_line << order.number
                 csv_line << order.bill_address.full_name
                 csv_line << (order.bill_address.address1 + order.bill_address.address2 ? order.bill_address.address2 : "" + order.bill_address.state + order.bill_address.country)
