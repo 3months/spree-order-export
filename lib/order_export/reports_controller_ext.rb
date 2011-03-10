@@ -34,15 +34,17 @@ module OrderExport
 
           orders_export = FasterCSV.generate(:col_sep => ";", :row_sep => "\r\n") do |csv|
             headers = [
-              t('order_export.header.last_updated'),
-              t('order_export.header.completed_at'),
-              t('order_export.header.number'),
-              t('order_export.header.address'),
-              t('order_export.header.email'),
-              t('order_export.header.variant_name'),
-              t('order_export.header.quantity'),
-              t('order_export.header.order_total'),
-              t('order_export.header.payment_method')
+              t('order_export_ext.header.last_updated'),
+              t('order_export_ext.header.completed_at'),
+              t('order_export_ext.header.number'),
+              t('order_export_ext.header.name'),
+              t('order_export_ext.header.address'),
+              t('order_export_ext.header.phone'),
+              t('order_export_ext.header.email'),
+              t('order_export_ext.header.variant_name'),
+              t('order_export_ext.header.quantity'),
+              t('order_export_ext.header.order_total'),
+              t('order_export_ext.header.payment_method')
             ]
 
             csv << headers
@@ -59,7 +61,7 @@ module OrderExport
                 csv_line << order.email
                 csv_line << line_item.variant.name
                 csv_line << line_item.quantity
-                csv_line << order.total.to_s
+                csv_line << number_to_currency(order.total)
                 csv_line << order.payment_method.name
                 csv << csv_line
               end

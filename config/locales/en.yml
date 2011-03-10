@@ -2,4 +2,17 @@ en:
     order_export: Order Export
     order_export_description: Export of orders based on information from line items.
     order_export_help: "Use the filters on the right to adjust the date ranges for the orders you wish to export, and then click the 'Search' button to generate the file."
+    order_export_ext:
+        header:
+            last_updated: Last updated
+            completed_at: Completed at
+            number: Order number
+            name: Customer name
+            address: Customer address
+            phone: Customer phone
+            email: Customer email
+            variant_name: Product name
+            quantity: Quantity
+            order_total: Order total
+            payment_method: Payment method
 
