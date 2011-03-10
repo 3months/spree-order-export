@@ -3,7 +3,6 @@ module OrderExport
     def self.included(base)
       base.class_eval do
 
-
         def order_export
           export = !params[:search].nil?
           params[:search] = {} unless params[:search]
@@ -61,7 +60,7 @@ module OrderExport
                 csv_line << order.email
                 csv_line << line_item.variant.name
                 csv_line << line_item.quantity
-                csv_line << number_to_currency(order.total)
+                csv_line << order.total.to_s
                 csv_line << order.payment_method.name
                 csv << csv_line
               end
